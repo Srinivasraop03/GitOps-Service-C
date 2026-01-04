@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitops-service-c
+  namespace: gitops-service-c
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitops-service-c
+  template:
+    metadata:
+      labels:
+        app: gitops-service-c
+    spec:
+      containers:
+        - name: app
+          image: Srinivasraop03/gitops-service-c:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitops-service-c
+  namespace: gitops-service-c
+spec:
+  selector:
+    app: gitops-service-c
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
